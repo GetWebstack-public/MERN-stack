@@ -22,7 +22,7 @@ A production-ready full-stack boilerplate with JWT authentication, a REST API, a
 
 ### Prerequisites
 
-- [GWS CLI](https://getwebstack.dev/docs/cli) installed and authenticated
+- [GWS CLI](https://getwebstack.com/docs/installation/) installed and authenticated
 - Docker running locally
 
 ### Start the environment
