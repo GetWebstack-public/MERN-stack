@@ -39,13 +39,15 @@ gws login
 gws config import gws.json
 ```
 
-If this is a brand-new machine or the project has never been set up, run the full setup skill instead (generates Dockerfiles, K8s manifests, and imports config automatically):
+**3. Set secrets**
 
 ```bash
-/gws-setup
+gws secret set JWT_SECRET --service server
 ```
 
-**3. Deploy locally**
+GWS stores the value encrypted server-side and injects it into the server pod at deploy time as an env var.
+
+**5. Deploy locally**
 
 ```bash
 gws up -y
@@ -183,7 +185,6 @@ This project ships with a set of GWS skills compatible with any AI agent (Claude
 | Want to check overall health after a change | `/gws-status` |
 | Need to restart the environment | `/gws-down` then `/gws-up` |
 
-
 ---
 
 ### `/gws-status` — Check environment health
@@ -226,17 +227,3 @@ Runs `gws up -y`, waits for all pods to reach `Running`, and prints the service 
 
 Gracefully tears down all pods and the gateway. Data in MongoDB is lost (persistence is disabled in dev — see `gws.json` `persistence.enabled: false`).
 
----
-
-### `/gws-setup` — Re-run full setup
-
-```bash
-/gws-setup
-```
-
-It re-detects services, regenerates Dockerfiles and K8s manifests, re-imports the config, and re-deploys.
-
-> **Note:** Re-import the project into the API any time with:
-> ```bash
-> gws config import gws.json
-> ```
