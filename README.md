@@ -27,19 +27,26 @@ A production-ready full-stack boilerplate with JWT authentication, a REST API, a
 
 ### Start the environment
 
-**1. Authenticate with GWS**
+**1. Clone the repo**
+
+```bash
+git clone https://github.com/GetWebstack-public/MERN-stack.git
+cd MERN-stack
+```
+
+**3. Authenticate with GWS**
 
 ```bash
 gws login
 ```
 
-**2. Import the project config**
+**4. Import the project config**
 
 ```bash
 gws config import gws.json
 ```
 
-**3. Set secrets**
+**5. Set secrets**
 
 ```bash
 gws secret set JWT_SECRET --service server
@@ -47,7 +54,7 @@ gws secret set JWT_SECRET --service server
 
 GWS stores the value encrypted server-side and injects it into the server pod at deploy time as an env var.
 
-**5. Deploy locally**
+**6. Deploy locally**
 
 ```bash
 gws up -y
