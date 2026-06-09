@@ -23,7 +23,10 @@ export default function RegisterPage() {
       login(data.token, data.user);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+      const data = err.response?.data;
+      setError(
+        data?.errors?.[0]?.msg || data?.message || 'Registration failed'
+      );
     } finally {
       setLoading(false);
     }

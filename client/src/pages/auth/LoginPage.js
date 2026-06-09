@@ -22,7 +22,10 @@ export default function LoginPage() {
       login(data.token, data.user);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      const data = err.response?.data;
+      setError(
+        data?.errors?.[0]?.msg || data?.message || 'Login failed'
+      );
     } finally {
       setLoading(false);
     }
