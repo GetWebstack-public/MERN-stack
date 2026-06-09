@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getTodos, createTodo, toggleTodo, deleteTodo } from '../api/todos';
+import './TodoPage.css';
 
 export default function TodoPage() {
   const [todos, setTodos] = useState([]);
@@ -44,59 +45,53 @@ export default function TodoPage() {
     }
   };
 
-  return (
-    <div style={{ maxWidth: 560, margin: '2rem auto', padding: '0 1rem' }}>
-      <h2>Todos</h2>
+  const done = todos.filter((t) => t.completed).length;
 
-      <form onSubmit={handleAdd} style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+  return (
+    <div className="page">
+      <div className="todo-header">
+        <h2 className="todo-title">My Tasks</h2>
+        {todos.length > 0 && (
+          <span className="todo-counter">{done}/{todos.length} done</span>
+        )}
+      </div>
+
+      <form onSubmit={handleAdd} className="todo-form">
         <input
+          className="form-control todo-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Add a new task..."
-          style={{ flex: 1, padding: '0.5rem' }}
+          placeholder="Add a new task…"
         />
-        <button type="submit" disabled={!input.trim()}>Add</button>
+        <button type="submit" className="btn btn-primary" disabled={!input.trim()}>
+          Add
+        </button>
       </form>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error-msg" style={{marginBottom:'1rem'}}>{error}</p>}
 
       {loading ? (
-        <p>Loading...</p>
+        <div className="todo-empty">Loading…</div>
       ) : todos.length === 0 ? (
-        <p style={{ color: '#888' }}>No tasks yet. Add one above!</p>
+        <div className="todo-empty">
+          <div className="todo-empty-icon">✓</div>
+          <p>No tasks yet. Add one above!</p>
+        </div>
       ) : (
-        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+        <ul className="todo-list">
           {todos.map((todo) => (
-            <li
-              key={todo._id}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.6rem 0',
-                borderBottom: '1px solid #eee',
-              }}
-            >
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={() => handleToggle(todo._id)}
-              />
-              <span
-                style={{
-                  flex: 1,
-                  textDecoration: todo.completed ? 'line-through' : 'none',
-                  color: todo.completed ? '#aaa' : 'inherit',
-                }}
-              >
-                {todo.title}
-              </span>
-              <button
-                onClick={() => handleDelete(todo._id)}
-                style={{ color: 'red', background: 'none', border: 'none', cursor: 'pointer' }}
-              >
-                ✕
-              </button>
+            <li key={todo._id} className={`todo-item ${todo.completed ? 'completed' : ''}`}>
+              <label className="todo-check-label">
+                <input
+                  type="checkbox"
+                  className="todo-checkbox"
+                  checked={todo.completed}
+                  onChange={() => handleToggle(todo._id)}
+                />
+                <span className="todo-checkmark" />
+              </label>
+              <span className="todo-text">{todo.title}</span>
+              <button className="btn-danger" onClick={() => handleDelete(todo._id)} title="Delete">✕</button>
             </li>
           ))}
         </ul>

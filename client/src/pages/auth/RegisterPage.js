@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { register as registerApi } from '../../api/auth';
 import { useAuth } from '../../context/AuthContext';
 import useForm from '../../hooks/useForm';
+import './auth.css';
 
 export default function RegisterPage() {
   const { login } = useAuth();
@@ -29,16 +30,38 @@ export default function RegisterPage() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: '4rem auto', padding: '0 1rem' }}>
-      <h2>Register</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <input name="name" type="text" placeholder="Full name" value={values.name} onChange={handleChange} required />
-        <input name="email" type="email" placeholder="Email" value={values.email} onChange={handleChange} required />
-        <input name="password" type="password" placeholder="Password (min 6 chars)" value={values.password} onChange={handleChange} required />
-        <button type="submit" disabled={loading}>{loading ? 'Registering...' : 'Register'}</button>
-      </form>
-      <p>Have an account? <Link to="/login">Login</Link></p>
+    <div className="auth-bg">
+      <div className="auth-card card">
+        <div className="auth-header">
+          <div className="auth-logo-dot" />
+          <h1 className="auth-title">Create account</h1>
+          <p className="auth-subtitle">Get started for free</p>
+        </div>
+
+        {error && <p className="error-msg">{error}</p>}
+
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label>Full name</label>
+            <input className="form-control" name="name" type="text" placeholder="Jane Doe" value={values.name} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input className="form-control" name="email" type="email" placeholder="you@example.com" value={values.email} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label>Password <span style={{fontWeight:400,textTransform:'none',letterSpacing:0}}>(min 6 chars)</span></label>
+            <input className="form-control" name="password" type="password" placeholder="••••••••" value={values.password} onChange={handleChange} required />
+          </div>
+          <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
+            {loading ? 'Creating account…' : 'Create account'}
+          </button>
+        </form>
+
+        <p className="auth-footer">
+          Already have an account? <Link to="/login">Sign in</Link>
+        </p>
+      </div>
     </div>
   );
 }

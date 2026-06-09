@@ -26,7 +26,14 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/todos" element={<TodoPage />} />
+          <Route
+            path="/todos"
+            element={
+              <ProtectedRoute>
+                <TodoPage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
