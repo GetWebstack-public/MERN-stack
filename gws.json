@@ -1,0 +1,76 @@
+{
+  "name": "mern-stack",
+  "version": "1.0.0",
+  "registry": {
+    "mode": "local"
+  },
+  "provision": {
+    "environments": {
+      "dev": {
+        "type": "k3d",
+        "default": true
+      }
+    }
+  },
+  "services": [
+    {
+      "name": "server",
+      "path": "./server",
+      "port": 5000,
+      "hosts": ["server.mern-stack.local.getwebstack.dev"],
+      "fileSync": true,
+      "fileSyncIgnore": [
+        "node_modules/",
+        "dist/",
+        "build/",
+        "coverage/",
+        "*.log"
+      ],
+      "dockerfile": ".gws/services/server/Dockerfile",
+      "manifests": ".gws/services/server/k8s"
+    },
+    {
+      "name": "client",
+      "path": "./client",
+      "port": 3000,
+      "hosts": ["client.mern-stack.local.getwebstack.dev"],
+      "fileSync": true,
+      "fileSyncIgnore": [
+        "node_modules/",
+        "build/",
+        "coverage/",
+        "*.log"
+      ],
+      "dockerfile": ".gws/services/client/Dockerfile",
+      "manifests": ".gws/services/client/k8s"
+    },
+    {
+      "name": "mongodb",
+      "path": "./mongodb",
+      "helm": {
+        "chart": "oci://registry-1.docker.io/bitnamicharts/mongodb",
+        "version": "18.6.31",
+        "values": {
+          "fullnameOverride": "mongodb",
+          "architecture": "standalone",
+          "auth": {
+            "rootPassword": "devpassword",
+            "usernames": ["devuser"],
+            "passwords": ["devpassword"],
+            "databases": ["devdb"]
+          },
+          "persistence": {
+            "enabled": false
+          },
+          "resources": {
+            "requests": {
+              "cpu": "100m",
+              "memory": "256Mi"
+            }
+          }
+        }
+      },
+      "fileSync": false
+    }
+  ]
+}
