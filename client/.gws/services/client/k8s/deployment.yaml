@@ -28,5 +28,13 @@ spec:
         - name: CI
           value: "false"
         - name: REACT_APP_API_URL
-          value: "https://server.mern-stack.local.getwebstack.dev/api"
+          value: "https://server.mern-stack.local.getwebstack.dev:9443/api"
+        - name: WDS_SOCKET_PORT
+          value: "9443"
+        - name: WDS_SOCKET_HOST
+          value: "client.mern-stack.local.getwebstack.dev"
+        - name: WDS_SOCKET_PROTOCOL
+          value: "wss"
+        - name: DANGEROUSLY_DISABLE_HOST_CHECK
+          value: "true"
       restartPolicy: Always

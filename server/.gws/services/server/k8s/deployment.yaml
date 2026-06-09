@@ -32,5 +32,5 @@ spec:
         - name: JWT_EXPIRES_IN
           value: "7d"
         - name: CLIENT_URL
-          value: "https://client.mern-stack.local.getwebstack.dev"
+          value: "https://client.mern-stack.local.getwebstack.dev:9443"
       restartPolicy: Always

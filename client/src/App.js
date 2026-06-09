@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ProfilePage from './pages/user/ProfilePage';
+import TodoPage from './pages/TodoPage';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/todos" element={<TodoPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

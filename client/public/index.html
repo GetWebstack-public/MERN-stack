@@ -25,6 +25,24 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script>
+      // Patch WebSocket to upgrade ws:// to wss:// when page is served over HTTPS.
+      // Needed because CRA 5 / webpack-dev-server 4 hard-codes ws: in the HMR client.
+      (function () {
+        var OrigWS = window.WebSocket;
+        window.WebSocket = function (url, protocols) {
+          if (typeof url === 'string' && url.startsWith('ws://') && location.protocol === 'https:') {
+            url = 'wss://' + url.slice(5);
+          }
+          return protocols ? new OrigWS(url, protocols) : new OrigWS(url);
+        };
+        window.WebSocket.prototype = OrigWS.prototype;
+        window.WebSocket.CONNECTING = OrigWS.CONNECTING;
+        window.WebSocket.OPEN = OrigWS.OPEN;
+        window.WebSocket.CLOSING = OrigWS.CLOSING;
+        window.WebSocket.CLOSED = OrigWS.CLOSED;
+      })();
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

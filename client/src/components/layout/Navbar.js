@@ -14,6 +14,7 @@ export default function Navbar() {
   return (
     <nav style={{ padding: '1rem', borderBottom: '1px solid #ddd', display: 'flex', gap: '1rem', alignItems: 'center' }}>
       <Link to="/" style={{ fontWeight: 'bold' }}>MERN App</Link>
+      <Link to="/todos">Todos</Link>
       <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem' }}>
         {user ? (
           <>
